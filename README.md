@@ -1,26 +1,24 @@
-
 # 🌌 **SpaceBet** 🚀
 
-**SpaceBet** is an exciting **Discord bot** that combines betting and gambling with space exploration, inspired by the casino from *Cowboy Bebop*. 🌠 **Discover, bet, and win** in the vast universe! 🌌💰
+**SpaceBet** is an exciting **Discord bot** that combines betting and gambling with space exploration, inspired by the casino from _Cowboy Bebop_. 🌠 **Discover, bet, and win** in the vast universe! 🌌💰
 
 ---
 
 ## 📑 Table of Contents
 
-- [Description](#description)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Environment Variables](#environment-variables)
-- [NPM Scripts](#npm-scripts)
-- [Contribution](#contribution)
-- [License](#license)
+- [Description](#-description) 
+- [Installation](#%EF%B8%8F-installation) 
+- [Usage](#-usage) 
+- [Configuration](#-configuration) 
+- [Environment Variables](#%EF%B8%8F-environment-variables) 
+- [NPM Scripts](#%EF%B8%8F-npm-scripts) 
+- [License](#-license)
 
 ---
 
 ## ✨ Description
 
-**SpaceBet** is a space-inspired betting and gambling platform in the form of a **Discord bot**. 🚀 Users can participate in various types of **bets and games** to win rewards, just like in the casino from *Cowboy Bebop*. 🪐🎰 The application is built using **Node.js** and **Sequelize** for database management.
+**SpaceBet** is a space-inspired betting and gambling platform in the form of a **Discord bot**. 🚀 Users can participate in various types of **bets and games** to win rewards, just like in the casino from _Cowboy Bebop_. 🪐🎰 The application is built using **Node.js** and **Sequelize** for database management.
 
 ---
 
@@ -110,21 +108,6 @@ Here are the NPM scripts available in the project and their purposes:
 - **`npm run deploy`**: Runs the `deploy-commands.js` script to load the commands into the **Discord bot**.
 - **`npm run lint`**: Uses **ESLint** to lint the codebase, ensuring that it follows the coding standards.
 - **`npm run format`**: Uses **Prettier** to format the codebase, making sure it is clean and consistent.
-
----
-
-## 🤝 Contribution
-
-If you would like to contribute to this project, follow these steps:
-
-1. Fork the repository.
-2. Create a new branch:  
-   `git checkout -b feature/new-feature`
-3. Make your changes and commit them:  
-   `git commit -am 'Add new feature'`
-4. Push your changes to the branch:  
-   `git push origin feature/new-feature`
-5. Create a **Pull Request**.
 
 ---
 
