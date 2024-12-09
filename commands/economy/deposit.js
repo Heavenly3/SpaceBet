@@ -45,6 +45,14 @@ module.exports = {
       });
     }
 
+    // Evitar depósitos con valores negativos
+    if (amount <= 0) {
+      return interaction.reply({
+        content: 'You cannot deposit a negative or zero amount.',
+        ephemeral: true,
+      });
+    }
+
     user.wallet -= amount;
     user.bank += amount;
     await user.save();
@@ -53,17 +61,17 @@ module.exports = {
       .setColor(0x0000ff)
       .setTitle('<:safe:1305557666319306782> Deposit Successful')
       .setDescription(
-        `You have deposited **${amount} <:money:1305557747017973791>** into your bank.`,
+        `You have deposited **${amount} <:disk:1309988409208475730>** into your bank.`,
       )
       .addFields(
         {
           name: 'New Wallet Balance',
-          value: `${user.wallet} <:money:1305557747017973791>`,
+          value: `${user.wallet} <:disk:1309988409208475730>`,
           inline: true,
         },
         {
           name: 'New Bank Balance',
-          value: `${user.bank} <:money:1305557747017973791>`,
+          value: `${user.bank} <:disk:1309988409208475730>`,
           inline: true,
         },
       )

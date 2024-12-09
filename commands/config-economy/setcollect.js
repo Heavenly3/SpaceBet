@@ -35,7 +35,7 @@ module.exports = {
     await RoleCollect.upsert({ roleId: role.id, amount });
 
     await interaction.reply(
-      `The collect amount for role **${role.name}** has been set to **${amount} <:money:1305557747017973791>**.`,
+      `The collect amount for role **${role.name}** has been set to **${amount} <:disk:1309988409208475730>**.`,
     );
   },
 };

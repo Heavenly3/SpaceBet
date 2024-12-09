@@ -58,17 +58,17 @@ module.exports = {
       .setColor(0x00ff00)
       .setTitle('💸 Payment Successful')
       .setDescription(
-        `You have transferred **${amount} coins** to ${target.username}.`,
+        `You have transferred **${amount} <:disk:1309988409208475730>** to ${target.username}.`,
       )
       .addFields(
         {
           name: 'Your New Wallet Balance',
-          value: `${senderData.wallet} coins`,
+          value: `${senderData.wallet} <:disk:1309988409208475730>`,
           inline: true,
         },
         {
           name: `${target.username}'s New Wallet Balance`,
-          value: `${targetData.wallet} coins`,
+          value: `${targetData.wallet} <:disk:1309988409208475730>`,
           inline: true,
         },
       )

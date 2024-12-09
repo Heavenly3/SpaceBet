@@ -1,24 +1,22 @@
-# 🌌 **SpaceBet** 🚀
-
-**SpaceBet** is an exciting **Discord bot** that combines betting and gambling with space exploration, inspired by the casino from _Cowboy Bebop_. 🌠 **Discover, bet, and win** in the vast universe! 🌌💰
+**SpaceBet** is an exciting **Discord bot** that combines betting and gambling with space exploration. 🌠 **Discover, bet, and win** in the vast universe! 🌌💰
 
 ---
 
 ## 📑 Table of Contents
 
-- [Description](#-description) 
-- [Installation](#%EF%B8%8F-installation) 
-- [Usage](#-usage) 
-- [Configuration](#-configuration) 
-- [Environment Variables](#%EF%B8%8F-environment-variables) 
-- [NPM Scripts](#%EF%B8%8F-npm-scripts) 
+- [Description](#-description)
+- [Installation](#%EF%B8%8F-installation)
+- [Usage](#-usage)
+- [Configuration](#-configuration)
+- [Environment Variables](#%EF%B8%8F-environment-variables)
+- [NPM Scripts](#%EF%B8%8F-npm-scripts)
 - [License](#-license)
 
 ---
 
 ## ✨ Description
 
-**SpaceBet** is a space-inspired betting and gambling platform in the form of a **Discord bot**. 🚀 Users can participate in various types of **bets and games** to win rewards, just like in the casino from _Cowboy Bebop_. 🪐🎰 The application is built using **Node.js** and **Sequelize** for database management.
+**SpaceBet** is a space-inspired betting and gambling platform in the form of a **Discord bot**. 🚀 Users can participate in various types of **bets and games** to win rewards. 🪐🎰 The application is built using **Node.js** and **Sequelize** for database management.
 
 ---
 

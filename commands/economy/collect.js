@@ -10,7 +10,8 @@ module.exports = {
     const user = await User.findOne({ where: { userId: interaction.user.id } });
     if (!user) {
       return interaction.reply({
-        content: 'You need to have an account to collect rewards.',
+        content:
+          '🚀 You need to have an account to collect rewards from the galaxy.',
         ephemeral: true,
       });
     }
@@ -25,14 +26,14 @@ module.exports = {
       });
       if (roleCollect) {
         totalReward += roleCollect.amount;
-        rewardsList += `<@&${role.id}> - **${roleCollect.amount} <:money:1305557747017973791>**\n`;
+        rewardsList += `<@&${role.id}> - **${roleCollect.amount} <:disk:1309988409208475730>** (Stellar Bonus)\n`;
       }
     }
 
     if (totalReward === 0) {
       return interaction.reply({
         content:
-          'You do not have any collectable rewards with your current roles.',
+          '💫 You do not have any collectable rewards with your current roles in the cosmos.',
         ephemeral: true,
       });
     }
@@ -42,13 +43,14 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setColor(0x00ff00)
-      .setTitle('🎉 Daily Collect!')
+      .setTitle('🚀 Stellar Daily Collection!')
       .setDescription(
-        `You collected a total of **${totalReward} <:money:1305557747017973791>** from your roles!\n\n**Roles and Rewards:**\n${rewardsList}`,
+        `🌌 You have successfully collected **${totalReward} <:disk:1309988409208475730>** from your galactic roles!\n\n**Your Stellar Roles & Rewards:**\n${rewardsList}\nPrepare for more space adventures!`,
       )
+      .setThumbnail('https://example.com/space-icon.png') // Un icono galáctico o algo relacionado con el espacio.
       .setTimestamp()
       .setFooter({
-        text: interaction.user.tag,
+        text: `Space Commander: ${interaction.user.tag}`,
         iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
       });
 

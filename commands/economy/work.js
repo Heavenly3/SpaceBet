@@ -77,11 +77,11 @@ module.exports = {
       .setColor(0xffff00)
       .setTitle('🔨 Work Completed')
       .setDescription(
-        `${message} You earned **${earnings} <:money:1305557747017973791>**.`,
+        `${message} You earned **${earnings} <:disk:1309988409208475730>**.`,
       )
       .addFields({
         name: 'New Wallet Balance',
-        value: `${user.wallet} <:money:1305557747017973791>`,
+        value: `${user.wallet} <:disk:1309988409208475730>`,
         inline: true,
       })
       .setTimestamp()

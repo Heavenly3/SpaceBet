@@ -53,7 +53,7 @@ module.exports = {
         thiefData.wallet += stolenAmount;
         await targetData.save();
         await thiefData.save();
-        message = `You successfully stole **${stolenAmount} coins** from ${target.username}.`;
+        message = `You successfully stole **${stolenAmount} <:disk:1309988409208475730>** from ${target.username}.`;
       } else {
         message = `You tried to steal from ${target.username} but failed to get anything valuable.`;
       }
@@ -64,7 +64,7 @@ module.exports = {
       fineAmount = Math.floor(stolenAmount * (Math.random() * (1 - 0.1) + 0.1));
       thiefData.wallet -= fineAmount;
       await thiefData.save();
-      message = `You failed to steal any money from ${target.username} and were fined **${fineAmount} coins**.`;
+      message = `You failed to steal any money from ${target.username} and were fined **${fineAmount} <:disk:1309988409208475730>**.`;
     }
 
     const embed = new EmbedBuilder()
@@ -74,12 +74,12 @@ module.exports = {
       .addFields(
         {
           name: 'Your New Wallet Balance',
-          value: `${thiefData.wallet} coins`,
+          value: `${thiefData.wallet} <:disk:1309988409208475730>`,
           inline: true,
         },
         {
           name: `${target.username}'s New Wallet Balance`,
-          value: `${targetData.wallet} coins`,
+          value: `${targetData.wallet} <:disk:1309988409208475730>`,
           inline: true,
         },
       )

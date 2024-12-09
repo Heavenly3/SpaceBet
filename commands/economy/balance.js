@@ -20,17 +20,17 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setColor(0x00ff00)
-      .setTitle('<:balance:1305558738240933928> Balance')
-      .setDescription(`Balance information for ${target.username}`)
+      .setTitle('Balance')
+      .setDescription(`Balance information for <@${target.id}>`)
       .addFields(
         {
-          name: '<:wallet:1305557719528243353> Wallet',
-          value: `${user.wallet} <:money:1305557747017973791>`,
+          name: 'Galactic Wallet',
+          value: `${user.wallet} <:disk:1309988409208475730>`,
           inline: true,
         },
         {
-          name: '<:safe:1305557666319306782> Bank',
-          value: `${user.bank} <:money:1305557747017973791>`,
+          name: 'Stellar Bank',
+          value: `${user.bank} <:disk:1309988409208475730>`,
           inline: true,
         },
       )

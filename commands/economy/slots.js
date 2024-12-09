@@ -101,8 +101,8 @@ module.exports = {
       .setTitle(win ? '🎉 Jackpot!' : '😞 Try Again!')
       .setDescription(
         win
-          ? `**${reel1} ${reel2} ${reel3}**\n\nYou won **${payout} <:money:1305557747017973791>**!`
-          : `**${reel1} ${reel2} ${reel3}**\n\nYou lost **${betAmount} <:money:1305557747017973791>**. Better luck next time!`,
+          ? `**${reel1} ${reel2} ${reel3}**\n\nYou won **${payout} <:disk:1309988409208475730>**!`
+          : `**${reel1} ${reel2} ${reel3}**\n\nYou lost **${betAmount} <:disk:1309988409208475730>**. Better luck next time!`,
       )
       .setTimestamp()
       .setThumbnail(

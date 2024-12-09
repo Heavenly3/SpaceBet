@@ -69,17 +69,17 @@ module.exports = {
         .setColor(0x00ff00)
         .setTitle('💸 Money Added')
         .setDescription(
-          `Added **${amount} coins** to ${target.username}'s wallet.`,
+          `Added **${amount} <:disk:1309988409208475730>** to ${target.username}'s wallet.`,
         )
         .addFields(
           {
             name: 'New Wallet Balance',
-            value: `${user.wallet} coins`,
+            value: `${user.wallet} <:disk:1309988409208475730>`,
             inline: true,
           },
           {
             name: 'New Bank Balance',
-            value: `${user.bank} coins`,
+            value: `${user.bank} <:disk:1309988409208475730>`,
             inline: true,
           },
         )
@@ -104,17 +104,17 @@ module.exports = {
         .setColor(0xffa500)
         .setTitle('💸 Money Removed')
         .setDescription(
-          `Removed **${amount} <:money:1305557747017973791>** from ${target.username}'s wallet.`,
+          `Removed **${amount} <:disk:1309988409208475730>** from ${target.username}'s wallet.`,
         )
         .addFields(
           {
             name: 'New Wallet Balance',
-            value: `${user.wallet} <:money:1305557747017973791>`,
+            value: `${user.wallet} <:disk:1309988409208475730>`,
             inline: true,
           },
           {
             name: 'New Bank Balance',
-            value: `${user.bank} <:money:1305557747017973791>`,
+            value: `${user.bank} <:disk:1309988409208475730>`,
             inline: true,
           },
         )
@@ -137,12 +137,12 @@ module.exports = {
         .addFields(
           {
             name: 'New Wallet Balance',
-            value: `${user.wallet} <:money:1305557747017973791>`,
+            value: `${user.wallet} <:disk:1309988409208475730>`,
             inline: true,
           },
           {
             name: 'New Bank Balance',
-            value: `${user.bank} <:money:1305557747017973791>`,
+            value: `${user.bank} <:disk:1309988409208475730>`,
             inline: true,
           },
         )

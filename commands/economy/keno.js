@@ -105,7 +105,7 @@ module.exports = {
       .setColor(payout > 0 ? 0x00ff00 : 0xff0000)
       .setTitle('🎲 Keno Results 🎲')
       .setDescription(
-        `**Your Numbers:** ${chosenNumbers.join(', ')}\n**Winning Numbers:** ${winningNumbers.join(', ')}\n**Matches:** ${matches}\n\n**${payout > 0 ? `You won ${payout} <:money:1305557747017973791>!` : `You lost ${betAmount} <:money:1305557747017973791>. Better luck next time!`}**`,
+        `**Your Numbers:** ${chosenNumbers.join(', ')}\n**Winning Numbers:** ${winningNumbers.join(', ')}\n**Matches:** ${matches}\n\n**${payout > 0 ? `You won ${payout} <:disk:1309988409208475730>!` : `You lost ${betAmount} <:disk:1309988409208475730>. Better luck next time!`}**`,
       )
       .setTimestamp()
       .setThumbnail(

@@ -45,7 +45,7 @@ module.exports = {
     await roleCollect.save();
 
     await interaction.reply(
-      `The collect amount for role **${role.name}** has been modified to **${amount} <:money:1305557747017973791>**.`,
+      `The collect amount for role **${role.name}** has been modified to **${amount} <:disk:1309988409208475730>**.`,
     );
   },
 };

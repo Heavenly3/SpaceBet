@@ -142,8 +142,8 @@ module.exports = {
       )
       .setDescription(
         win
-          ? `**The roulette landed on ${number} ${color}!**\n\nYou won **${payout} <:money:1305557747017973791>** with a ${winType} bet!`
-          : `**The roulette landed on ${number} ${color}.**\n\nYou lost **${amount} <:money:1305557747017973791>**. Better luck next time!`,
+          ? `**The roulette landed on ${number} ${color}!**\n\nYou won **${payout} <:disk:1309988409208475730>** with a ${winType} bet!`
+          : `**The roulette landed on ${number} ${color}.**\n\nYou lost **${amount} <:disk:1309988409208475730>**. Better luck next time!`,
       )
       .setTimestamp()
       .setFooter({

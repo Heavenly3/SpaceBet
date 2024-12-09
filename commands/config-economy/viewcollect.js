@@ -35,7 +35,7 @@ module.exports = {
     for (let roleReward of rolesWithRewards) {
       const role = interaction.guild.roles.cache.get(roleReward.roleId);
       if (role) {
-        rewardsList += `<@&${role.id}> - **${roleReward.amount} <:money:1305557747017973791>**\n`;
+        rewardsList += `<@&${role.id}> - **${roleReward.amount} <:disk:1309988409208475730>**\n`;
       }
     }
 

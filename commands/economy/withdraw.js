@@ -40,7 +40,7 @@ module.exports = {
 
     if (amount > user.bank) {
       return interaction.reply({
-        content: `You don't have enough money in your bank to withdraw ${amount} <:money:1305557747017973791>.`,
+        content: `You don't have enough money in your bank to withdraw ${amount} <:disk:1309988409208475730>.`,
         ephemeral: true,
       });
     }
@@ -53,17 +53,17 @@ module.exports = {
       .setColor(0xff0000)
       .setTitle('<:withdraw:1305561987417112648> Withdrawal Successful')
       .setDescription(
-        `You have withdrawn **${amount} <:money:1305557747017973791>** from your bank.`,
+        `You have withdrawn **${amount} <:disk:1309988409208475730>** from your bank.`,
       )
       .addFields(
         {
           name: 'New Wallet Balance',
-          value: `${user.wallet} <:money:1305557747017973791>`,
+          value: `${user.wallet} <:disk:1309988409208475730>`,
           inline: true,
         },
         {
           name: 'New Bank Balance',
-          value: `${user.bank} <:money:1305557747017973791>`,
+          value: `${user.bank} <:disk:1309988409208475730>`,
           inline: true,
         },
       )

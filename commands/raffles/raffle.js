@@ -85,7 +85,7 @@ module.exports = {
 
         embed.addFields(
           { name: 'Winner', value: `<@${winner.userId}>` },
-          { name: 'Total Prize', value: `${prizePool.prize} Lobe Coin` },
+          { name: 'Total Prize', value: `${prizePool.prize}` },
         );
 
         prizePool.prize = initialPrize;
