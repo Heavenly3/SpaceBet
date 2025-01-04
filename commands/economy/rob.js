@@ -58,7 +58,6 @@ module.exports = {
         message = `You tried to steal from ${target.username} but failed to get anything valuable.`;
       }
     } else {
-      // Failed attempt
       const stealPercentage = Math.random();
       stolenAmount = Math.floor(targetData.wallet * stealPercentage);
       fineAmount = Math.floor(stolenAmount * (Math.random() * (1 - 0.1) + 0.1));

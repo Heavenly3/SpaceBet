@@ -1,54 +1,76 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require('../../models/User');
+const { Settings } = require('../../models/Settings');
+const fs = require('fs');
+const path = require('path');
 
-const rewards = [
-  { name: '100 <:disk:1309988409208475730>', amount: 100 },
-  { name: '200 <:disk:1309988409208475730>', amount: 200 },
-  { name: '500 <:disk:1309988409208475730>', amount: 500 },
-  { name: '1,000 <:disk:1309988409208475730>', amount: 1000 },
-  { name: 'Nothing', amount: 0 },
-  { name: '2,000 <:disk:1309988409208475730>', amount: 2000 },
-  { name: '5,000 <:disk:1309988409208475730>', amount: 5000 },
-  { name: 'Nothing', amount: 0 },
-  { name: '10,000 <:disk:1309988409208475730>', amount: 10000 },
-  { name: 'Nothing', amount: 0 },
-];
+const dataPath = path.join(__dirname, '../data/datawheel.json');
+const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+const defaultRewards = JSON.stringify(data.defaultRewards);
+const defaultInterval = data.defaultInterval;
+
+const cooldowns = new Map();
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('dailywheel')
-    .setDescription('Spin the daily wheel for cosmic rewards!'),
+    .setDescription('Spin the daily wheel for rewards!'),
   async execute(interaction) {
     const user = await User.findOne({ where: { userId: interaction.user.id } });
     if (!user) {
       return interaction.reply({
-        content: '🚀 **You need to have an account to spin the Cosmic Wheel.**',
+        content: '🚀 **You need an account to spin the Daily Wheel.**',
+        ephemeral: true,
+      });
+    }
+
+    const intervalSetting = await Settings.findOne({
+      where: { key: 'dailywheel_interval' },
+    });
+    const interval = intervalSetting
+      ? parseInt(intervalSetting.value, 10)
+      : defaultInterval;
+
+    const now = Date.now();
+    const lastSpin = cooldowns.get(interaction.user.id) || 0;
+
+    if (now - lastSpin < interval * 1000) {
+      const timeLeft = (lastSpin + interval * 1000 - now) / 1000;
+      return interaction.reply({
+        content: `⏲️ **Please wait ${Math.ceil(timeLeft)} seconds before spinning the wheel again.**`,
+        ephemeral: true,
+      });
+    }
+
+    const settings = await Settings.findOne({
+      where: { key: 'dailywheel_rewards' },
+    });
+    const rewards = settings
+      ? JSON.parse(settings.value)
+      : JSON.parse(defaultRewards);
+
+    if (rewards.length === 0) {
+      return interaction.reply({
+        content:
+          '⚠️ **No rewards available to spin. Please contact the administrator.**',
         ephemeral: true,
       });
     }
 
     const reward = rewards[Math.floor(Math.random() * rewards.length)];
-
     if (reward.amount > 0) {
       user.wallet += reward.amount;
-      await user.save();
     }
+    await user.save();
+    cooldowns.set(interaction.user.id, now);
 
     const embed = new EmbedBuilder()
       .setColor(reward.amount > 0 ? 0x00ff00 : 0xff0000)
       .setTitle('🛸 **Daily Cosmic Wheel Spin!**')
       .setDescription(
         reward.amount > 0
-          ? `🌌 **Congratulations, Space Explorer!** You won **${reward.name}**! Your cosmic wallet has been **boosted**. 🚀💰`
-          : `💫 **Better luck next time, Commander!** You won **${reward.name}**. Don't give up, stellar rewards await! 🌠✨`,
-      )
-      .setThumbnail('https://example.com/space-wheel-icon.png')
-      .setFooter({
-        text: `Space Commander: ${interaction.user.tag}`,
-        iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
-      })
-      .setImage(
-        'https://cdn.discordapp.com/attachments/1227025952924635147/1310020009812037642/Outer_space-cuate.png?ex=6743b2b5&is=67426135&hm=fb43f1a17d11c8fe943b6562e1f500c0f777ae0769f05c502d17b60d0dccdece&',
+          ? `🌌 **Congratulations!** You won **${reward.name}**! Your wallet has been updated. 🚀💰`
+          : `💫 **Better luck next time!** You won **${reward.name}**. Try again tomorrow! 🌠✨`,
       )
       .setTimestamp();
 

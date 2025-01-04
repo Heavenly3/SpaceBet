@@ -1,0 +1,12 @@
+{
+  "defaultMessages": [
+    "You worked hard and earned some coins!",
+    "Great job! You received a reward for your work.",
+    "Your efforts paid off and you earned some coins."
+  ],
+  "defaultRange": {
+    "min": 10,
+    "max": 50
+  },
+  "defaultCooldown": 60
+}

@@ -1,18 +1,14 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require('../../models/User');
+const fs = require('fs');
+const path = require('path');
 
-const horseNames = [
-  'Thunderbolt',
-  'Lightning',
-  'Storm',
-  'Tornado',
-  'Blizzard',
-  'Hurricane',
-  'Cyclone',
-  'Typhoon',
-  'Tempest',
-  'Gale',
-];
+const dataPath = path.join(__dirname, '../data/datahorse.json');
+const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+const horseNames = data.horseNames;
+const defaultCooldown = data.defaultCooldown;
+
+const cooldowns = new Map();
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -24,11 +20,17 @@ module.exports = {
         .setDescription('Bet amount (e.g., 100 or all)')
         .setRequired(true),
     )
-    .addIntegerOption((option) =>
+    .addStringOption((option) =>
       option
         .setName('horse')
-        .setDescription('Horse number to bet on (1-10)')
-        .setRequired(true),
+        .setDescription('Select the horse to bet on')
+        .setRequired(true)
+        .addChoices(
+          ...horseNames.map((name, index) => ({
+            name: `${index + 1}: ${name}`,
+            value: `${index + 1}`,
+          })),
+        ),
     ),
 
   async execute(interaction) {
@@ -41,11 +43,12 @@ module.exports = {
     }
 
     const bet = interaction.options.getString('bet');
-    const horse = interaction.options.getInteger('horse');
+    const horse = interaction.options.getString('horse');
 
-    if (horse < 1 || horse > 10) {
+    const horseIndex = parseInt(horse);
+    if (isNaN(horseIndex) || horseIndex < 1 || horseIndex > 10) {
       return interaction.reply({
-        content: 'Please choose a horse number between 1 and 10.',
+        content: 'Please choose a horse from the list.',
         ephemeral: true,
       });
     }
@@ -58,11 +61,28 @@ module.exports = {
       });
     }
 
+    const userId = interaction.user.id;
+    const now = Date.now();
+
+    if (cooldowns.has(userId)) {
+      const expirationTime = cooldowns.get(userId) + defaultCooldown * 1000;
+
+      if (now < expirationTime) {
+        const timeLeft = (expirationTime - now) / 1000;
+        return interaction.reply({
+          content: `⏳ Please wait ${timeLeft.toFixed(1)} more seconds before betting again.`,
+          ephemeral: true,
+        });
+      }
+    }
+
+    cooldowns.set(userId, now);
+
     const positions = Array.from({ length: 10 }, (_, i) => i + 1).sort(
       () => Math.random() - 0.5,
     );
     const winningHorse = positions[0];
-    const betHorsePosition = positions.indexOf(horse) + 1;
+    const betHorsePosition = positions.indexOf(horseIndex) + 1;
 
     const rewardMultipliers = { 1: 6, 2: 4, 3: 2 };
     const rewardMultiplier = rewardMultipliers[betHorsePosition] || 0;
@@ -75,7 +95,7 @@ module.exports = {
           : `(0%)`;
 
         const arrow =
-          horseNumber === horse ? ` <:astronaut:1310015130989367337>` : '';
+          horseNumber === horseIndex ? ` <:astronaut:1310015130989367337>` : '';
         return `\` ${horseNumber} \` **${horseNames[horseNumber - 1]}** ${rewardText}${arrow}`;
       })
       .join('\n');

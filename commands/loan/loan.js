@@ -1,9 +1,8 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require('../../models/User');
 
-// Establece el interés y la fecha de vencimiento predeterminados
-const DEFAULT_INTEREST = 5; // Interés predeterminado del 5%
-const DEFAULT_DUE_SECONDS = 30; // El préstamo vence en 30 segundos a partir de la fecha de la solicitud
+const DEFAULT_INTEREST = 5;
+const DEFAULT_DUE_SECONDS = 30;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -49,13 +48,13 @@ module.exports = {
     }
 
     const loanDueDate = new Date();
-    loanDueDate.setSeconds(loanDueDate.getSeconds() + DEFAULT_DUE_SECONDS); // Establece la fecha de vencimiento a 30 segundos
+    loanDueDate.setSeconds(loanDueDate.getSeconds() + DEFAULT_DUE_SECONDS);
 
     user.loanActive = true;
     user.loanAmount = amount;
     user.loanInterest = DEFAULT_INTEREST;
     user.loanDueDate = loanDueDate;
-    user.wallet += amount; // Agrega el monto del préstamo a la wallet del usuario
+    user.wallet += amount;
 
     await user.save();
 

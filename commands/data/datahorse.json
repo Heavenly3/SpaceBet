@@ -1,0 +1,15 @@
+{
+  "horseNames": [
+    "Thunderbolt",
+    "Lightning",
+    "Storm",
+    "Tornado",
+    "Blizzard",
+    "Hurricane",
+    "Cyclone",
+    "Typhoon",
+    "Tempest",
+    "Gale"
+  ],
+  "defaultCooldown": 60
+}

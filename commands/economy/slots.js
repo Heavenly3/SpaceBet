@@ -1,14 +1,14 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require('../../models/User');
+const fs = require('fs');
+const path = require('path');
 
-const symbols = [
-  '<:apple:1305946916802003016>',
-  '<:lemon:1305946897240035388>',
-  '<:watermelon:1305946877165834380>',
-  '<:orange:1305946846274912339>',
-  '<:seven:1305946825945124896>',
-  '<:strawberry:1305946808677040198>',
-];
+const dataPath = path.join(__dirname, '../data/dataslots.json');
+const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+const symbols = data.symbols;
+const defaultCooldown = data.defaultCooldown;
+
+const cooldowns = new Map();
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -60,6 +60,23 @@ module.exports = {
       });
     }
 
+    const userId = interaction.user.id;
+    const now = Date.now();
+
+    if (cooldowns.has(userId)) {
+      const expirationTime = cooldowns.get(userId) + defaultCooldown * 1000;
+
+      if (now < expirationTime) {
+        const timeLeft = (expirationTime - now) / 1000;
+        return interaction.reply({
+          content: `⏳ Please wait ${timeLeft.toFixed(1)} more seconds before playing the slots again.`,
+          ephemeral: true,
+        });
+      }
+    }
+
+    cooldowns.set(userId, now);
+
     await interaction.deferReply();
 
     const reel1 = symbols[Math.floor(Math.random() * symbols.length)];
@@ -98,11 +115,13 @@ module.exports = {
 
     const resultEmbed = new EmbedBuilder()
       .setColor(win ? 0x00ff00 : 0xff0000)
-      .setTitle(win ? '🎉 Jackpot!' : '😞 Try Again!')
+      .setTitle(
+        win ? '🎉 Congratulations, you won!' : '😞 Better luck next time!',
+      )
       .setDescription(
         win
-          ? `**${reel1} ${reel2} ${reel3}**\n\nYou won **${payout} <:disk:1309988409208475730>**!`
-          : `**${reel1} ${reel2} ${reel3}**\n\nYou lost **${betAmount} <:disk:1309988409208475730>**. Better luck next time!`,
+          ? `**${reel1} ${reel2} ${reel3}**\n\nYou won **${payout} <:disk:1309988409208475730>** coins!`
+          : `**${reel1} ${reel2} ${reel3}**\n\nYou lost **${betAmount} <:disk:1309988409208475730>** coins. Try again!`,
       )
       .setTimestamp()
       .setThumbnail(

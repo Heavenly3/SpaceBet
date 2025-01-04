@@ -13,7 +13,6 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    // Verificar si el usuario tiene permisos de administrador
     if (
       !interaction.member.permissions.has(
         PermissionsBitField.Flags.Administrator,

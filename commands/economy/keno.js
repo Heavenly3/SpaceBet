@@ -1,5 +1,14 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require('../../models/User');
+const fs = require('fs');
+const path = require('path');
+
+const dataPath = path.join(__dirname, '../data/datakeno.json');
+const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+const payouts = data.payouts;
+const defaultCooldown = data.defaultCooldown;
+
+const cooldowns = new Map();
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -76,6 +85,23 @@ module.exports = {
       });
     }
 
+    const userId = interaction.user.id;
+    const now = Date.now();
+
+    if (cooldowns.has(userId)) {
+      const expirationTime = cooldowns.get(userId) + defaultCooldown * 1000;
+
+      if (now < expirationTime) {
+        const timeLeft = (expirationTime - now) / 1000;
+        return interaction.reply({
+          content: `⏳ Please wait ${timeLeft.toFixed(1)} more seconds before playing Keno again.`,
+          ephemeral: true,
+        });
+      }
+    }
+
+    cooldowns.set(userId, now);
+
     user.wallet -= betAmount;
     await user.save();
 
@@ -91,7 +117,6 @@ module.exports = {
       winningNumbers.includes(num),
     ).length;
 
-    const payouts = [0, 3, 12, 43, 130, 820, 1600];
     const payoutMultiplier = payouts[matches] || 0;
     const payout = betAmount * payoutMultiplier;
 
@@ -100,7 +125,6 @@ module.exports = {
     }
     await user.save();
 
-    // Crear el embed del resultado
     const embed = new EmbedBuilder()
       .setColor(payout > 0 ? 0x00ff00 : 0xff0000)
       .setTitle('🎲 Keno Results 🎲')

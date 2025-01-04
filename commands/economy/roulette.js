@@ -1,20 +1,14 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require('../../models/User');
+const fs = require('fs');
+const path = require('path');
 
-const rouletteOptions = {
-  red: { type: 'color', color: 'red' },
-  black: { type: 'color', color: 'black' },
-  even: { type: 'parity', parity: 'even' },
-  odd: { type: 'parity', parity: 'odd' },
-  '1-18': { type: 'range', min: 1, max: 18 },
-  '19-36': { type: 'range', min: 19, max: 36 },
-  '1-12': { type: 'dozen', dozen: 1 },
-  '13-24': { type: 'dozen', dozen: 2 },
-  '25-36': { type: 'dozen', dozen: 3 },
-  '1st': { type: 'column', column: 1 },
-  '2nd': { type: 'column', column: 2 },
-  '3rd': { type: 'column', column: 3 },
-};
+const dataPath = path.join(__dirname, '../data/dataroulette.json');
+const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+const rouletteOptions = data.rouletteOptions;
+const defaultCooldown = data.defaultCooldown;
+
+const cooldowns = new Map();
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -32,7 +26,13 @@ module.exports = {
         .setDescription(
           'Bet choice (e.g., red, black, odd, even, 1-18, 19-36, 1-12, etc.)',
         )
-        .setRequired(true),
+        .setRequired(true)
+        .addChoices(
+          ...Object.keys(rouletteOptions).map((choice) => ({
+            name: choice,
+            value: choice,
+          })),
+        ),
     ),
   async execute(interaction) {
     const user = await User.findOne({ where: { userId: interaction.user.id } });
@@ -83,6 +83,23 @@ module.exports = {
         ephemeral: true,
       });
     }
+
+    const userId = interaction.user.id;
+    const now = Date.now();
+
+    if (cooldowns.has(userId)) {
+      const expirationTime = cooldowns.get(userId) + defaultCooldown * 1000;
+
+      if (now < expirationTime) {
+        const timeLeft = (expirationTime - now) / 1000;
+        return interaction.reply({
+          content: `⏳ Please wait ${timeLeft.toFixed(1)} more seconds before placing another bet.`,
+          ephemeral: true,
+        });
+      }
+    }
+
+    cooldowns.set(userId, now);
 
     const number = Math.floor(Math.random() * 37);
     const color = number === 0 ? 'green' : number % 2 === 0 ? 'black' : 'red';

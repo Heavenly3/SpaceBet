@@ -1,0 +1,17 @@
+{
+  "rouletteOptions": {
+    "red": { "type": "color", "color": "red" },
+    "black": { "type": "color", "color": "black" },
+    "even": { "type": "parity", "parity": "even" },
+    "odd": { "type": "parity", "parity": "odd" },
+    "1-18": { "type": "range", "min": 1, "max": 18 },
+    "19-36": { "type": "range", "min": 19, "max": 36 },
+    "1-12": { "type": "dozen", "dozen": 1 },
+    "13-24": { "type": "dozen", "dozen": 2 },
+    "25-36": { "type": "dozen", "dozen": 3 },
+    "1st": { "type": "column", "column": 1 },
+    "2nd": { "type": "column", "column": 2 },
+    "3rd": { "type": "column", "column": 3 }
+  },
+  "defaultCooldown": 60
+}

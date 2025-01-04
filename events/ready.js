@@ -1,6 +1,6 @@
 const { Events } = require('discord.js');
 const { sequelize } = require('../models/User');
-const collectInterest = require('../scripts/interestCollector'); // Importa el script de cobro
+// const collectInterest = require('../scripts/interestCollector');
 
 module.exports = {
   name: Events.ClientReady,
@@ -12,8 +12,7 @@ module.exports = {
       await sequelize.sync();
       console.log('Database synchronized.');
 
-      // Ejecuta el script de cobro cada 30 segundos
-      setInterval(collectInterest, 30000);
+      // setInterval(collectInterest, 30000);
     } catch (error) {
       console.error('Error synchronizing the database:', error);
     }

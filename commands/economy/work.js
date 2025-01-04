@@ -1,10 +1,15 @@
-const {
-  SlashCommandBuilder,
-  EmbedBuilder,
-  PermissionsBitField,
-} = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { User } = require('../../models/User');
 const { Settings } = require('../../models/Settings');
+const fs = require('fs');
+const path = require('path');
+
+const dataPath = path.join(__dirname, '../data/datawork.json');
+const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+const defaultMessages = data.defaultMessages;
+const defaultRange = data.defaultRange;
+const defaultCooldown = data.defaultCooldown;
+
 const cooldowns = new Map();
 
 module.exports = {
@@ -22,47 +27,49 @@ module.exports = {
       });
     }
 
-    const isAdmin = interaction.member.permissions.has(
-      PermissionsBitField.Flags.Administrator,
-    );
-
     const cooldownSetting = await Settings.findOne({
       where: { key: 'workCooldown' },
     });
     const cooldownAmount = cooldownSetting
       ? parseInt(cooldownSetting.value) * 1000
-      : 30 * 1000;
+      : defaultCooldown * 1000;
 
-    if (!isAdmin) {
-      const now = Date.now();
-      if (cooldowns.has(user.userId)) {
-        const expirationTime = cooldowns.get(user.userId) + cooldownAmount;
+    const now = Date.now();
+    if (cooldowns.has(user.userId)) {
+      const expirationTime = cooldowns.get(user.userId) + cooldownAmount;
 
-        if (now < expirationTime) {
-          const timeLeft = (expirationTime - now) / 1000;
-          return interaction.reply({
-            content: `Please wait ${timeLeft.toFixed(1)} more seconds before working again.`,
-            ephemeral: true,
-          });
-        }
+      if (now < expirationTime) {
+        const timeLeft = (expirationTime - now) / 1000;
+        return interaction.reply({
+          content: `⏳ Please wait ${timeLeft.toFixed(1)} more seconds before working again.`,
+          ephemeral: true,
+        });
       }
-
-      cooldowns.set(user.userId, now);
     }
+
+    cooldowns.set(user.userId, now);
 
     const workMessagesSetting = await Settings.findOne({
       where: { key: 'workMessages' },
     });
     const workMessages = workMessagesSetting
       ? JSON.parse(workMessagesSetting.value)
-      : ['You worked hard and earned some coins!'];
+      : defaultMessages;
 
     const workRangeSetting = await Settings.findOne({
       where: { key: 'workRange' },
     });
     const workRange = workRangeSetting
       ? JSON.parse(workRangeSetting.value)
-      : { min: 10, max: 100 };
+      : defaultRange;
+
+    if (workMessages.length === 0) {
+      return interaction.reply({
+        content:
+          '⚠️ No work messages available. Please contact the administrator.',
+        ephemeral: true,
+      });
+    }
 
     const earnings =
       Math.floor(Math.random() * (workRange.max - workRange.min + 1)) +
