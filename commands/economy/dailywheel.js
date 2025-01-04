@@ -4,7 +4,7 @@ const { Settings } = require('../../models/Settings');
 const fs = require('fs');
 const path = require('path');
 
-const dataPath = path.join(__dirname, '../data/datawheel.json');
+const dataPath = path.join(__dirname, '../../data/datawheel.json');
 const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 const defaultRewards = JSON.stringify(data.defaultRewards);
 const defaultInterval = data.defaultInterval;

@@ -3,7 +3,7 @@ const { User } = require('../../models/User');
 const fs = require('fs');
 const path = require('path');
 
-const dataPath = path.join(__dirname, '../data/datakeno.json');
+const dataPath = path.join(__dirname, '../../data/datakeno.json');
 const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 const payouts = data.payouts;
 const defaultCooldown = data.defaultCooldown;

@@ -4,7 +4,7 @@ const { Settings } = require('../../models/Settings');
 const fs = require('fs');
 const path = require('path');
 
-const dataPath = path.join(__dirname, '../data/datawork.json');
+const dataPath = path.join(__dirname, '../../data/datawork.json');
 const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 const defaultMessages = data.defaultMessages;
 const defaultRange = data.defaultRange;

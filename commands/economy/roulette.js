@@ -3,7 +3,7 @@ const { User } = require('../../models/User');
 const fs = require('fs');
 const path = require('path');
 
-const dataPath = path.join(__dirname, '../data/dataroulette.json');
+const dataPath = path.join(__dirname, '../../data/dataroulette.json');
 const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 const rouletteOptions = data.rouletteOptions;
 const defaultCooldown = data.defaultCooldown;
