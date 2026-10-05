@@ -1,19 +1,16 @@
-# Node modules
+# Dependencies
 node_modules/
-.vscode/
 
-# Environment variables
+# Environment
 .env
 
-# Configuration files
-config.json
-
-# Migrations
-migrations/
-
-# Database files
+# Database
+storage/
 database.sqlite
+*.db-shm
+*.db-wal
 
-# Lock files
-bun.lockb
-package-lock.json
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
